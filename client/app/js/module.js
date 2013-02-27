@@ -22,6 +22,12 @@ define([ "angular", "js/controllers/LingSyncController", "js/controllers/Setting
 				}).when('/settings', {
 					templateUrl : 'partials/settings.html',
 					controller : SettingsController
+				}).when('/lingsync/template1', {
+					templateUrl : 'partials/template1.html',
+					controller : LingSyncController
+				}).when('/lingsync/template2', {
+					templateUrl : 'partials/template2.html',
+					controller : LingSyncController
 				}).otherwise({
 					redirectTo : '/lingsync'
 				});

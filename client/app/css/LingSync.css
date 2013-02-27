@@ -1,0 +1,11 @@
+.selectedRow {
+	background-color: #1EECFF;
+}
+
+.unselectedRow {
+	background-color: #BDEBF8;
+}
+
+div.row {
+	padding: 10px;
+}

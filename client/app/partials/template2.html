@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="span12 pagination-centered">
+		<span>TEMPLATE 2</span>
+	</div>
+</div>
+
+<div class="row" ng-class="{selectedRow: selected=='newEntry', unselectedRow: selected!='newEntry'}" ng-click="selectRow('newEntry')">
+	<div class="span4">
+		<input class="span4" type="text" ng-model="fieldData.field1"
+			placeholder="{{fields.field1.title}}"><br /> <input
+			class="span4" type="text" ng-model="fieldData.field2"
+			placeholder="{{fields.field2.title}}"><br /> <input
+			class="span4" type="text" ng-model="fieldData.field3"
+			placeholder="{{fields.field3.title}}"><br />
+	</div>
+	<div class="span4">
+		<input class="span4" type="text" ng-model="fieldData.field4"
+			placeholder="{{fields.field4.title}}"><br />
+		<textarea rows="3" class="span4" ng-model="fieldData.field5"
+			placeholder="{{fields.field5.title}}"></textarea>
+	</div>
+	<div class="span2">
+		<button ng-show="selected=='newEntry'" class="btn btn-success" ng-click="testFunction(fieldData)">Save New</button>
+	</div>
+</div>
+
+<div class="row" ng-class="{selectedRow: selected==datum, unselectedRow: selected!=datum}" ng-repeat="datum in data" ng-click="selectRow(datum)">
+	
+	<!-- Show when editing -->
+	<div ng-show="selected==datum">
+	<div class="span4">
+		<input class="span4" type="text" ng-model="fieldData.field1"
+			placeholder="{{datum[fields.field1.label]}}"><br /> <input
+			class="span4" type="text" ng-model="fieldData.field2"
+			placeholder="{{datum[fields.field2.label]}}"><br /> <input
+			class="span4" type="text" ng-model="fieldData.field3"
+			placeholder="{{datum[fields.field3.label]}}"><br />
+	</div>
+	<div class="span4">
+		<input class="span4" type="text" ng-model="fieldData.field4"
+			placeholder="{{datum[fields.field4.label]}}"><br />
+		<textarea rows="3" class="span4" ng-model="fieldData.field5"
+			placeholder="{{datum[fields.field5.label]}}"></textarea>
+	</div>
+	<div class="span2">
+		<button class="btn btn-success" ng-click="testFunction(fieldData)">Save Changes</button>
+	</div>
+	</div>
+	
+	
+	<!-- Show when not editing -->
+	<div  ng-show="selected!=datum">
+	<div class="span4">
+		<span class="span4">{{datum[fields.field1.label]}}</span><br /> <span
+			class="span4">{{datum[fields.field2.label]}}</span><br /> <span
+			class="span4">{{datum[fields.field3.label]}}</span><br />
+	</div>
+	<div class="span4">
+		<span class="span4">{{datum[fields.field4.label]}}</span><br />
+		<span rows="3">{{datum[fields.field5.label]}}</span>
+	</div>
+	<div class="span2">
+		&nbsp;
+	</div>
+	</div>
+	
+</div>
+
