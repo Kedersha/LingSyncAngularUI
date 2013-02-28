@@ -7,38 +7,38 @@
 <div class="row" ng-class="{selectedRow: selected=='newEntry', unselectedNewRow: selected!='newEntry'}" ng-click="selectRow('newEntry')">
 	<div class="span4">
 		<input class="span4" type="text" ng-model="fieldData.field1"
-			placeholder="{{fields.field1.title}}"><br /> <input
+			placeholder="{{fields.field1.title}}"> <input
 			class="span4" type="text" ng-model="fieldData.field2"
-			placeholder="{{fields.field2.title}}"><br /> <input
+			placeholder="{{fields.field2.title}}"> <input
 			class="span4" type="text" ng-model="fieldData.field3"
-			placeholder="{{fields.field3.title}}"><br />
+			placeholder="{{fields.field3.title}}">
 	</div>
 	<div class="span4">
 		<input class="span4" type="text" ng-model="fieldData.field4"
-			placeholder="{{fields.field4.title}}"><br />
+			placeholder="{{fields.field4.title}}">
 		<textarea rows="3" class="span4" ng-model="fieldData.field5"
 			placeholder="{{fields.field5.title}}"></textarea>
 	</div>
 	<div class="span2">
-		<button ng-show="selected=='newEntry'" class="btn btn-success" ng-click="testFunction(fieldData)">Save New</button>
+		<button ng-show="selected=='newEntry'" class="btn btn-success" ng-click="saveNew(fieldData)">Save New</button>
 	</div>
 </div>
 
-<div class="row" ng-class="{selectedRow: selected==datum, unselectedRow: selected!=datum}" ng-repeat="datum in data" ng-click="selectRow(datum)">
+<div class="row" ng-class="{selectedRow: selected==datum, unselectedRow: selected!=datum}" ng-repeat="datum in data | orderBy:orderProp:reverse" ng-click="selectRow(datum)">
 	
 	<!-- Show when editing -->
 	<div ng-show="selected==datum">
 	<div class="span4">
 		<input class="span4" type="text" ng-model="fieldData.field1"
-			placeholder="{{datum[fields.field1.label]}}"><br /> <input
+			placeholder="{{datum[fields.field1.label]}}"> <input
 			class="span4" type="text" ng-model="fieldData.field2"
-			placeholder="{{datum[fields.field2.label]}}"><br /> <input
+			placeholder="{{datum[fields.field2.label]}}"> <input
 			class="span4" type="text" ng-model="fieldData.field3"
-			placeholder="{{datum[fields.field3.label]}}"><br />
+			placeholder="{{datum[fields.field3.label]}}">
 	</div>
 	<div class="span4">
 		<input class="span4" type="text" ng-model="fieldData.field4"
-			placeholder="{{datum[fields.field4.label]}}"><br />
+			placeholder="{{datum[fields.field4.label]}}">
 		<textarea rows="3" class="span4" ng-model="fieldData.field5"
 			placeholder="{{datum[fields.field5.label]}}"></textarea>
 	</div>
@@ -60,7 +60,7 @@
 		<span rows="3" title="{{fields.field5.title}}">{{datum[fields.field5.label]}}</span>
 	</div>
 	<div class="span2">
-		&nbsp;
+		&nbsp; {{datum.dateModified | standardDate}}
 	</div>
 	</div>
 	
