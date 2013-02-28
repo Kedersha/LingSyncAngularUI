@@ -4,7 +4,7 @@
 	</div>
 </div>
 
-<div class="row" ng-class="{selectedRow: selected=='newEntry', unselectedRow: selected!='newEntry'}" ng-click="selectRow('newEntry')">
+<div class="row" ng-class="{selectedRow: selected=='newEntry', unselectedNewRow: selected!='newEntry'}" ng-click="selectRow('newEntry')">
 	<div class="span4">
 		<input class="span4" type="text" ng-model="fieldData.field1"
 			placeholder="{{fields.field1.title}}"><br /> <input
@@ -51,13 +51,13 @@
 	<!-- Show when not editing -->
 	<div  ng-show="selected!=datum">
 	<div class="span4">
-		<span class="span4">{{datum[fields.field1.label]}}</span><br /> <span
-			class="span4">{{datum[fields.field2.label]}}</span><br /> <span
-			class="span4">{{datum[fields.field3.label]}}</span><br />
+		<span class="span4" title="{{fields.field1.title}}">{{datum[fields.field1.label]}}</span><br /> <span
+			class="span4" title="{{fields.field2.title}}">{{datum[fields.field2.label]}}</span><br /> <span
+			class="span4" title="{{fields.field3.title}}">{{datum[fields.field3.label]}}</span><br />
 	</div>
 	<div class="span4">
-		<span class="span4">{{datum[fields.field4.label]}}</span><br />
-		<span rows="3">{{datum[fields.field5.label]}}</span>
+		<span class="span4" title="{{fields.field4.title}}">{{datum[fields.field4.label]}}</span><br />
+		<span rows="3" title="{{fields.field5.title}}">{{datum[fields.field5.label]}}</span>
 	</div>
 	<div class="span2">
 		&nbsp;

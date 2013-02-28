@@ -1,9 +1,16 @@
 .selectedRow {
 	background-color: #1EECFF;
+	border: 2px solid;
 }
 
-.unselectedRow {
+.unselectedRow:nth-child(odd) {
 	background-color: #BDEBF8;
+}
+.unselectedRow {
+	background-color: #99CCFF;
+}
+.unselectedNewRow {
+	background-color: #CCCCCC;
 }
 
 div.row {
