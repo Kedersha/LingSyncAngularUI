@@ -9,6 +9,21 @@ define([ "angular" ], function(angular) {
       var t = new Date(newDate);
       return d.toLocaleDateString() + " " + t.toLocaleTimeString();
     };
+  }).filter('shortDate', function() {
+    return function(input) {
+      var newDate = input.replace(/\"/g,"");
+      var d = new Date(newDate);
+      return d.toLocaleDateString();
+    };
+  }).filter('neverEmpty', function() {
+    return function(input) {
+      if (input == "" || input == undefined || input == " ") {
+        return "--";
+      }
+      else {
+        return input;
+      }
+    };
   });
 	return LingSyncFilters;
 });

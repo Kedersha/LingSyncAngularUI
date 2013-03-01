@@ -1,18 +1,54 @@
+.LingSyncBody {
+	background-color: #74C2E1;
+}
+
 .selectedRow {
-	background-color: #1EECFF;
+	background-color: #74C2E1;
 	border: 2px solid;
 }
 
 .unselectedRow:nth-child(odd) {
-	background-color: #BDEBF8;
+	background-color: #CDFFFF;
 }
+
 .unselectedRow {
-	background-color: #99CCFF;
+	background-color: #66CCFF;
 }
+
 .unselectedNewRow {
 	background-color: #CCCCCC;
 }
 
+.settingsHeader {
+	background-color: #0099CC;
+	border: 1px solid;
+}
+
+.settingsRow:nth-child(odd) {
+	background-color: #CDFFFF;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.settingsRow {
+	background-color: #66CCFF;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.activeTemplate {
+	background-color: #83F787;
+	border-radius: 15px;
+}
+
 div.row {
 	padding: 10px;
+}
+
+h1 {
+	color: #000000;
+	font-family: "Palatino"
+}
+
+h2 {
+	color: #FFFFFF;
+	font-family: "Palatino"
 }

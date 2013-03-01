@@ -2,49 +2,89 @@ console.log("Loading the LingSyncController.");
 
 'use strict';
 define([ "angular" ], function(angular) {
-  var LingSyncController = function($scope, $resource, LingSyncData) {
+  var LingSyncController = function($scope, $rootScope, $resource, LingSyncData) {
 
-    // CONTROLLER CODE
-    $scope.template = "template2";
+    var LingSyncPreferences = localStorage.getItem('LingSyncPreferences');
+    if (LingSyncPreferences == undefined) {
+      LingSyncPreferences = {
+        "userTemplate" : "template2",
+        "template1" : {
+          "field1" : {
+            "label" : "utterance",
+            "title" : "Utterance"
+          },
+          "field2" : {
+            "label" : "morphemes",
+            "title" : "Morphemes"
+          },
+          "field3" : {
+            "label" : "gloss",
+            "title" : "Gloss"
+          },
+          "field4" : {
+            "label" : "translation",
+            "title" : "Translation"
+          }
+        },
+        "template2" : {
+          "field1" : {
+            "label" : "utterance",
+            "title" : "Utterance"
+          },
+          "field2" : {
+            "label" : "morphemes",
+            "title" : "Morphemes"
+          },
+          "field3" : {
+            "label" : "gloss",
+            "title" : "Gloss"
+          },
+          "field4" : {
+            "label" : "translation",
+            "title" : "Translation"
+          },
+          "field5" : {
+            "label" : "notes",
+            "title" : "Notes"
+          },
+          "field6" : {
+            "label" : "judgement",
+            "title" : "Judgement"
+          },
+          "field7" : {
+            "label" : "",
+            "title" : ""
+          },
+          "field8" : {
+            "label" : "",
+            "title" : ""
+          }
+        }
+      };
+      localStorage.setItem('LingSyncPreferences', JSON.stringify(LingSyncPreferences));
+      console.log("Setting default preferences in localStorage.");
+    } else {
+      console.log("Loading LingSyncPreferences from localStorage.");
+      LingSyncPreferences = JSON.parse(LingSyncPreferences);
+    }
 
+    //Set scope variables
+    $rootScope.template = LingSyncPreferences.userTemplate;
+    $rootScope.fields = LingSyncPreferences[LingSyncPreferences.userTemplate];
+    $scope.loading = true;
     var DB = "lingsync1";
-
     $scope.orderProp = "dateModified";
-
     $scope.reverse = true;
-
-    $scope.fields = {
-      "field1" : {
-        "label" : "utterance",
-        "title" : "Utterance"
-      },
-      "field2" : {
-        "label" : "morphemes",
-        "title" : "Morphemes"
-      },
-      "field3" : {
-        "label" : "gloss",
-        "title" : "Gloss"
-      },
-      "field4" : {
-        "label" : "translation",
-        "title" : "Translation"
-      },
-      "field5" : {
-        "label" : "notes",
-        "title" : "Notes"
-      }
-    };
-
     $scope.selected = 'newEntry';
 
     // Fetch data from server and put into template scope
     function loadData() {
-      LingSyncData.async(DB, $scope.template).then(function(fieldData) {
+      LingSyncData.async(DB).then(function(fieldData) {
         var scopeData = [];
         for ( var i = 0; i < fieldData.length; i++) {
           scopeData[i] = {};
           var newField;
+          scopeData[i].id = fieldData[i].id;
           for ( var j = 0; j < fieldData[i].value.datumFields.length; j++) {
             newField = fieldData[i].value.datumFields[j].label;
             scopeData[i][newField] = fieldData[i].value.datumFields[j].value;
@@ -53,11 +93,14 @@ define([ "angular" ], function(angular) {
         }
 
         $scope.data = scopeData;
+        $scope.loading = false;
       });
     }
 
     loadData();
+
     $scope.saveNew = function(fieldData) {
+      $scope.loading = true;
       // Get blank template to build new record
       LingSyncData.blankTemplate().then(function(newRecord) {
         for (dataKey in fieldData) {
@@ -80,7 +123,7 @@ define([ "angular" ], function(angular) {
         }
         newRecord.dateEntered = new Date();
         newRecord.dateModified = new Date();
-        LingSyncData.saveNew(DB, $scope.template, newRecord).then(function(savedRecord) {
+        LingSyncData.saveNew(DB, newRecord).then(function(savedRecord) {
           // Update UI with updated corpus
           loadData();
         });
@@ -88,10 +131,45 @@ define([ "angular" ], function(angular) {
       });
     };
 
+    $scope.saveChanges = function(fieldData, docID) {
+      $scope.loading = true;
+      // Get latest version of record from server
+      LingSyncData.async(DB, docID).then(
+          function(editedRecord) {
+
+            // Edit record with updated data
+            for (dataKey in fieldData) {
+              for (fieldKey in $scope.fields) {
+                if (dataKey == fieldKey) {
+                  var newDataKey = $scope.fields[fieldKey].label;
+                  fieldData[newDataKey] = fieldData[dataKey];
+                  delete fieldData[dataKey];
+                }
+              }
+            }
+
+            // Populate new record with fields from scope
+            for ( var i = 0; i < editedRecord.datumFields.length; i++) {
+              for (key in fieldData) {
+                if (editedRecord.datumFields[i].label == key) {
+                  editedRecord.datumFields[i].value = fieldData[key];
+                }
+              }
+            }
+            editedRecord.dateModified = new Date();
+
+            // Save edited record and refresh data in scope
+            LingSyncData.saveEditedRecord(DB, docID, editedRecord).then(
+                function() {
+                  loadData();
+                });
+          });
+    };
+
     $scope.selectRow = function(datum) {
       $scope.selected = datum;
     };
   };
-  LingSyncController.$inject = [ '$scope', '$resource', 'LingSyncData' ];
+  LingSyncController.$inject = [ '$scope', '$rootScope', '$resource', 'LingSyncData' ];
   return LingSyncController;
 });

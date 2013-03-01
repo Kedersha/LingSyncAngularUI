@@ -18,16 +18,13 @@ define([ "angular", "js/controllers/LingSyncController", "js/controllers/Setting
 				console.log("Initializing the LingSync Angular UI module.");
 				$routeProvider.when('/lingsync', {
 					templateUrl : 'partials/main.html',
-					controller : LingSyncController
 				}).when('/settings', {
 					templateUrl : 'partials/settings.html',
 					controller : SettingsController
 				}).when('/lingsync/template1', {
 					templateUrl : 'partials/template1.html',
-					controller : LingSyncController
 				}).when('/lingsync/template2', {
 					templateUrl : 'partials/template2.html',
-					controller : LingSyncController
 				}).otherwise({
 					redirectTo : '/lingsync'
 				});

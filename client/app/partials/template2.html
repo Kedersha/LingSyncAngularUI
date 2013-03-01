@@ -1,68 +1,113 @@
-<div class="row">
-	<div class="span12 pagination-centered">
-		<span>TEMPLATE 2</span>
-	</div>
-</div>
-
-<div class="row" ng-class="{selectedRow: selected=='newEntry', unselectedNewRow: selected!='newEntry'}" ng-click="selectRow('newEntry')">
+<div class="row"
+	ng-class="{selectedRow: selected=='newEntry', unselectedNewRow: selected!='newEntry'}"
+	ng-click="selectRow('newEntry')"
+	ng-show="data!=undefined || loading==false">
 	<div class="span4">
-		<input class="span4" type="text" ng-model="fieldData.field1"
-			placeholder="{{fields.field1.title}}"> <input
-			class="span4" type="text" ng-model="fieldData.field2"
-			placeholder="{{fields.field2.title}}"> <input
-			class="span4" type="text" ng-model="fieldData.field3"
-			placeholder="{{fields.field3.title}}">
+		<input class="span4" type="text" ng-model="newFieldData.field1"
+			placeholder="{{fields.field1.title}}"
+			ng-hide="fields.field1.label==''"> <input class="span4"
+			type="text" ng-model="newFieldData.field2"
+			placeholder="{{fields.field2.title}}"
+			ng-hide="fields.field2.label==''"> <input class="span4"
+			type="text" ng-model="newFieldData.field3"
+			placeholder="{{fields.field3.title}}"
+			ng-hide="fields.field3.label==''">
 	</div>
 	<div class="span4">
-		<input class="span4" type="text" ng-model="fieldData.field4"
-			placeholder="{{fields.field4.title}}">
-		<textarea rows="3" class="span4" ng-model="fieldData.field5"
-			placeholder="{{fields.field5.title}}"></textarea>
+		<input class="span4" type="text" ng-model="newFieldData.field4"
+			placeholder="{{fields.field4.title}}"
+			ng-hide="fields.field4.label==''">
+		<textarea rows="3" class="span4" ng-model="newFieldData.field5"
+			placeholder="{{fields.field5.title}}"
+			ng-hide="fields.field5.label==''"></textarea>
 	</div>
 	<div class="span2">
-		<button ng-show="selected=='newEntry'" class="btn btn-success" ng-click="saveNew(fieldData)">Save New</button>
+		<input class="span2" type="text" ng-model="newFieldData.field6"
+			placeholder="{{fields.field6.title}}"
+			ng-hide="fields.field6.label==''"> <input class="span2"
+			type="text" ng-model="newFieldData.field7"
+			placeholder="{{fields.field7.title}}"
+			ng-hide="fields.field7.label==''"> <input class="span2"
+			type="text" ng-model="newFieldData.field8"
+			placeholder="{{fields.field8.title}}"
+			ng-hide="fields.field8.label==''">
+	</div>
+	<div class="span2">
+		<button ng-show="selected=='newEntry'" class="btn btn-primary"
+			ng-click="saveNew(newFieldData)">Save New</button>
+	</div>
+</div>
+<div class="row" ng-show="data==undefined || loading==true">
+	<div class="span12 pagination-centered">
+		<img src="img/loading-spinner.gif">
 	</div>
 </div>
 
-<div class="row" ng-class="{selectedRow: selected==datum, unselectedRow: selected!=datum}" ng-repeat="datum in data | orderBy:orderProp:reverse" ng-click="selectRow(datum)">
-	
+<div class="row"
+	ng-class="{selectedRow: selected==datum, unselectedRow: selected!=datum}"
+	ng-repeat="datum in data | orderBy:orderProp:reverse"
+	ng-click="selectRow(datum)" ng-hide="loading==true">
+
 	<!-- Show when editing -->
 	<div ng-show="selected==datum">
-	<div class="span4">
-		<input class="span4" type="text" ng-model="fieldData.field1"
-			placeholder="{{datum[fields.field1.label]}}"> <input
-			class="span4" type="text" ng-model="fieldData.field2"
-			placeholder="{{datum[fields.field2.label]}}"> <input
-			class="span4" type="text" ng-model="fieldData.field3"
-			placeholder="{{datum[fields.field3.label]}}">
+		<div class="span4">
+			<input class="span4" type="text" ng-model="fieldData.field1"
+				value="{{datum[fields.field1.label]}}"
+				ng-hide="fields.field1.label==''"> <input class="span4"
+				type="text" ng-model="fieldData.field2"
+				value="{{datum[fields.field2.label]}}"
+				ng-hide="fields.field2.label==''"> <input class="span4"
+				type="text" ng-model="fieldData.field3"
+				value="{{datum[fields.field3.label]}}"
+				ng-hide="fields.field3.label==''">
+		</div>
+		<div class="span4">
+			<input class="span4" type="text" ng-model="fieldData.field4"
+				value="{{datum[fields.field4.label]}}"
+				ng-hide="fields.field4.label==''">
+			<textarea rows="3" class="span4" ng-model="fieldData.field5"
+				value="{{datum[fields.field5.label]}}"
+				ng-hide="fields.field5.label==''"></textarea>
+		</div>
+		<div class="span2">
+			<input class="span2" type="text" ng-model="fieldData.field6"
+				value="{{datum[fields.field6.label]}}"
+				ng-hide="fields.field6.label==''"> <input class="span2"
+				type="text" ng-model="fieldData.field7"
+				value="{{datum[fields.field7.label]}}"
+				ng-hide="fields.field7.label==''"> <input class="span2"
+				type="text" ng-model="fieldData.field8"
+				value="{{datum[fields.field8.label]}}"
+				ng-hide="fields.field8.label==''">
+		</div>
+		<div class="span2">
+			<button class="btn btn-primary" ng-click="saveChanges(fieldData, datum.id)">Save
+				Changes</button>
+		</div>
 	</div>
-	<div class="span4">
-		<input class="span4" type="text" ng-model="fieldData.field4"
-			placeholder="{{datum[fields.field4.label]}}">
-		<textarea rows="3" class="span4" ng-model="fieldData.field5"
-			placeholder="{{datum[fields.field5.label]}}"></textarea>
-	</div>
-	<div class="span2">
-		<button class="btn btn-success" ng-click="testFunction(fieldData)">Save Changes</button>
-	</div>
-	</div>
-	
-	
+
+
 	<!-- Show when not editing -->
-	<div  ng-show="selected!=datum">
-	<div class="span4">
-		<span class="span4" title="{{fields.field1.title}}">{{datum[fields.field1.label]}}</span><br /> <span
-			class="span4" title="{{fields.field2.title}}">{{datum[fields.field2.label]}}</span><br /> <span
-			class="span4" title="{{fields.field3.title}}">{{datum[fields.field3.label]}}</span><br />
+	<div ng-show="selected!=datum">
+		<div class="span4">
+			<span class="span4" title="{{fields.field1.title}}" ng-hide="fields.field1.label==''">{{datum[fields.field1.label] | neverEmpty}}</span><br />
+			<span class="span4" title="{{fields.field2.title}}" ng-hide="fields.field2.label==''">{{datum[fields.field2.label] | neverEmpty}}</span><br />
+			<span class="span4" title="{{fields.field3.title}}" ng-hide="fields.field3.label==''">{{datum[fields.field3.label] | neverEmpty}}</span><br />
+		</div>
+		<div class="span4">
+			<span class="span4" title="{{fields.field4.title}}" ng-hide="fields.field4.label==''">{{datum[fields.field4.label] | neverEmpty}}</span><br />
+			<span class="span4" rows="3" title="{{fields.field5.title}}">{{datum[fields.field5.label] | neverEmpty}}</span>
+		</div>
+		<div class="span2">
+			<span class="span2" title="{{fields.field6.title}}" ng-hide="fields.field6.label==''">{{datum[fields.field6.label] | neverEmpty}}</span><br />
+			<span class="span2" title="{{fields.field7.title}}" ng-hide="fields.field7.label==''">{{datum[fields.field7.label] | neverEmpty}}</span><br />
+			<span class="span2" title="{{fields.field8.title}}" ng-hide="fields.field8.label==''">{{datum[fields.field8.label] | neverEmpty}}</span><br />
+		</div>
+		<div class="span2">
+			<span title="Date modified">Last modified:<br />{{datum.dateModified |
+				standardDate}}</span> <br />
+		</div>
 	</div>
-	<div class="span4">
-		<span class="span4" title="{{fields.field4.title}}">{{datum[fields.field4.label]}}</span><br />
-		<span rows="3" title="{{fields.field5.title}}">{{datum[fields.field5.label]}}</span>
-	</div>
-	<div class="span2">
-		&nbsp; {{datum.dateModified | standardDate}}
-	</div>
-	</div>
-	
+
 </div>
 
