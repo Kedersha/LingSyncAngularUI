@@ -72,7 +72,21 @@ define(
               .stringify(LingSyncPreferences));
           window.alert("Settings saved.");
         };
+        $scope.savenumberOfRecordsToDisplay = function(numberOfRecordsToDisplay) {
+          LingSyncPreferences = JSON.parse(localStorage
+              .getItem('LingSyncPreferences'));
+          if (numberOfRecordsToDisplay) {
+            LingSyncPreferences.resultSize = numberOfRecordsToDisplay;
+            localStorage.setItem('LingSyncPreferences', JSON
+                .stringify(LingSyncPreferences));
+            $rootScope.resultSize = numberOfRecordsToDisplay;
+            window.alert("Settings saved.");
+          } else {
+            window.alert("Please select a value from the dropdown.");
+          }
+        };
       };
+
       SettingsController.$inject = [ '$scope', '$rootScope', '$resource',
           'LingSyncData' ];
       return SettingsController;

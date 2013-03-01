@@ -2,7 +2,17 @@ console.log("Loading the LingSyncFilters.");
 
 'use strict';
 define([ "angular" ], function(angular) {
-	var LingSyncFilters = angular.module('LingSync.filters', []).filter('standardDate', function() {
+	var LingSyncFilters = angular.module('LingSync.filters', []).filter('startFrom',
+      function() {
+    return function(input, start) {
+      if (input == undefined) {
+        return;
+      } else {
+        start = +start; // parse to int
+        return input.slice(start);
+      }
+    };
+  }).filter('standardDate', function() {
     return function(input) {
       var newDate = input.replace(/\"/g,"");
       var d = new Date(newDate);
@@ -13,7 +23,7 @@ define([ "angular" ], function(angular) {
     return function(input) {
       var newDate = input.replace(/\"/g,"");
       var d = new Date(newDate);
-      return d.toLocaleDateString();
+      return d.getDate() + "-" + (d.getMonth()+1) + "-" + d.getFullYear();
     };
   }).filter('neverEmpty', function() {
     return function(input) {
