@@ -71,8 +71,6 @@ define(
           localStorage.setItem('LingSyncPreferences', JSON
               .stringify(LingSyncPreferences));
           window.alert("Settings saved.");
-          console.log(JSON.stringify(LingSyncPreferences));
-
         };
       };
       SettingsController.$inject = [ '$scope', '$rootScope', '$resource',
