@@ -12,7 +12,7 @@
 }
 
 .unselectedRow {
-	background-color: #66CCFF;
+	background-color: #9DF3F5;
 }
 
 .unselectedNewRow {
@@ -24,13 +24,8 @@
 	border: 1px solid;
 }
 
-.settingsRow:nth-child(odd) {
-	background-color: #CDFFFF;
-	box-shadow: 10px 10px 5px #888888;
-}
-
 .settingsRow {
-	background-color: #66CCFF;
+	background-color: #9DF3F5;
 	box-shadow: 10px 10px 5px #888888;
 }
 
