@@ -11,10 +11,10 @@
 	<div class="row settingsRow">
 		<div class="span6 offset5">
 			Number of records to display per page: <select
-				ng-model="numberOfRecordsToDisplay">
+				ng-model="numberOfRecordsToDisplay" ng-init="numberOfRecordsToDisplay=scopePreferences.resultSize">
 				<option value="5">5</option>
 				<option value="10">10</option>
-				<option value="25">25</option>
+				<option value="25" selected>25</option>
 				<option value="50">50</option>
 			</select>
 		</div>
