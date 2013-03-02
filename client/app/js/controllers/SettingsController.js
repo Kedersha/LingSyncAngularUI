@@ -72,7 +72,7 @@ define(
               .stringify(LingSyncPreferences));
           window.alert("Settings saved.");
         };
-        $scope.savenumberOfRecordsToDisplay = function(numberOfRecordsToDisplay) {
+        $scope.saveNumberOfRecordsToDisplay = function(numberOfRecordsToDisplay) {
           LingSyncPreferences = JSON.parse(localStorage
               .getItem('LingSyncPreferences'));
           if (numberOfRecordsToDisplay) {
